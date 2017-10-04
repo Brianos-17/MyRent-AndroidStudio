@@ -12,6 +12,8 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 
 import org.wit.myrent.R;
+import org.wit.myrent.app.MyRentApp;
+import org.wit.myrent.models.Portfolio;
 import org.wit.myrent.models.Residence;
 
 public class ResidenceActivity extends AppCompatActivity implements TextWatcher, OnCheckedChangeListener {
@@ -20,6 +22,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
     private Residence residence;
     private CheckBox rented;
     private Button dateButton;
+    private Portfolio portfolio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,27 +37,22 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
 
         geolocation.addTextChangedListener(this);
         dateButton.setEnabled(false);
+        MyRentApp app = (MyRentApp) getApplication();
+        portfolio = app.portfolio;
+        Long resId = (Long) getIntent().getExtras().getSerializable("RESIDENCE_ID");
+        residence = portfolio.getResidence(resId);
+        if (residence != null)
+        {
+            updateControls(residence);
+        }
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        //Inflate the menu; this adds items to the action bar if it is present
-//        getMenuInflater().inflate(R.menu.myrent, menu);
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        //Handle action bar item clicks here The action bar will automatically handle
-//        //clicks on the Home/Up button, so long as you specify a parent activity in AndroidManifest.xml
-//        int id = item.getItemId();
-//
-//        //noinspection SimplifableIfStatement
-//        if(id == R.id.action_settings) {
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//    }
+    public void updateControls(Residence residence)
+    {
+        geolocation.setText(residence.geolocation);
+        rented.setChecked(residence.rented);
+        dateButton.setText(residence.getDateString());
+    }
 
     @Override
     public void afterTextChanged(Editable editable)
