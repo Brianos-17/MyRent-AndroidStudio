@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -21,6 +22,7 @@ import java.util.GregorianCalendar;
 import android.app.DatePickerDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
+import static org.wit.android.helpers.IntentHelper.navigateUp;
 
 public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         OnCheckedChangeListener, View.OnClickListener, DatePickerDialog.OnDateSetListener {
@@ -35,6 +37,7 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_residence);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         geolocation = (EditText) findViewById(R.id.geolocation);
         residence = new Residence();
@@ -51,6 +54,15 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         if (residence != null) {
             updateControls(residence);
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:  navigateUp(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void updateControls(Residence residence) {
