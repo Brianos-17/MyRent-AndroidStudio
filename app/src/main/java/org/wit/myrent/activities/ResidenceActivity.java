@@ -22,7 +22,8 @@ import android.app.DatePickerDialog;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class ResidenceActivity extends AppCompatActivity implements TextWatcher, OnCheckedChangeListener, View.OnClickListener, DatePickerDialog.OnDateSetListener {
+public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
+        OnCheckedChangeListener, View.OnClickListener, DatePickerDialog.OnDateSetListener {
 
     private EditText geolocation;
     private Residence residence;
@@ -92,5 +93,11 @@ public class ResidenceActivity extends AppCompatActivity implements TextWatcher,
         Date date = new GregorianCalendar(year, monthOfYear, dayOfMonth).getTime();
         residence.date = date.getTime();
         dateButton.setText(residence.getDateString());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        portfolio.saveResidences();
     }
 }
