@@ -2,7 +2,7 @@ package org.wit.myrent.app;
 
 import org.wit.myrent.models.Portfolio;
 import android.app.Application;
-import static org.wit.android.helpers.LogHelpers.info
+import static org.wit.android.helpers.LogHelpers.info;
 
 public class MyRentApp extends Application
 {
